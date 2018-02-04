@@ -5,24 +5,156 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 27
     defaultConfig {
         applicationId "com.mc.androidtools"
         minSdkVersion 15
-        targetSdkVersion 26
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
+        versionNameSuffix ".1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         externalNativeBuild {
             cmake {
-                cppFlags ""
+                cppFlags "-frtti -fexceptions"
+            }
+            // Gradle会构建那些 ABI 配置,但是只会将 defaultConfig.ndk {} 代码块中指定的配置打包到 apk 中
+            ndkBuild{
+                abiFilters 'armeabi','armeabi-v7a'
             }
         }
+        //指打包到apk里面的.so包种类
+        ndk{
+            abiFilters 'armeabi','armeabi-v7a'
+        }
+        //manifest占位符 给manifest传递变量
+        manifestPlaceholders = [key:'bloczzgcold']
+        //65535问题 0xffff是否开启分包dex
+        multiDexEnabled false
+        //每一行表示要配置到主dex的一个类 com/a/c/c.class 配置分包规则
+        multiDexKeepFile file('keep_in_main.txt')
+        //-keep com.a.b.c.**{*;} proguard写法的的分包规则
+        multiDexKeepProguard
+        //支持svg
+        vectorDrawables{
+            //如果minsdk小于21 会在mdpi的目录png图片
+            generatedDensities 'mdpi'
+            //如果设置为true 引入svg兼容包 不会再去管generatedDensities配置
+            // 建议只选下面这个就好了 丢弃generatedDensities
+            useSupportLibrary true
+        }
+        //能支持部分java8的特性 比如lambda
+        jackOptions {
+            enabled false
+        }
+        //可以配置Java的一些方法  比如apt注解处理器
+        javaCompileOptions{
+
+        }
+        //配置在build/generated/source/buildConfig/ 下面有个BuildConfig文件下的属性
+        buildConfigField('boolean','IS_RELEASE','false')
+        //  res/value 设置一个值  之后就而已调用R.string.bloc了
+        //  生成的结果是<string name="bloc" translatable="false">zzgcold</string>
+        resValue('string','bloc','zzgcold')
     }
+    /**
+     * 创建两个维度 维度是配合 productFlavors一起使用的
+     * 下面一个是产品维度  一个是动态库维度
+     */
+    flavorDimensions('product','abi')
+    /**
+     * 创建产品风味 相当于集成了defaultConfig的属性  这里可以修改自己风味(变体)的属性
+     * 不同的维度的风味结合在一起 组成一个apk的配置信息
+     */
+    productFlavors{
+        free{
+            dimension 'product'
+
+            //这个属性是覆盖defaultConfig的
+            manifestPlaceholders = [key: '66']
+
+            //这个两个是追加在defaultConfig的
+            applicationIdSuffix ""
+            versionNameSuffix ".16"
+        }
+
+        pro{
+            dimension 'product'
+            manifestPlaceholders = [key: 'product']
+        }
+
+        x86{
+            dimension 'abi'
+        }
+
+        arm{
+            dimension 'abi'
+        }
+
+    }
+
+    /**
+     *    过滤风味(变体) 下面例子过滤pro变体
+     */
+    variantFilter{
+        variant ->
+            variant.flavors.each{
+                if(it.name.contains('pro')){
+                    setIgnore(true)
+                }
+            }
+    }
+
+    /**
+     * 配置签名文件 里面可以配置多个签名文件
+     */
+    signingConfigs{
+        mySign{
+            //签名文件的路径
+            storeFile file('debug.keystore')
+            //签名文件密码
+            storePassword 'android'
+            //别名
+            keyAlias 'androiddebygkey'
+            //key的密码
+            keyPassword 'android'
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            //优化压缩资源文件 和minifyEnabled配合使用 必须开启混淆 这个可以减少apk的大小
+            shrinkResources false
+        }
+
+        debug{
+            /**
+             * 属性
+             */
+            //和defaultConfig中配置是一样的  这个会累加到defaultConfig中配置的applicationId后面
+            applicationIdSuffix ''
+            //版本名字后缀,用法同上
+            versionNameSuffix '.1'
+            //生成的apk是否可以调试 默认是true
+            debuggable true
+            //是否可以调试NDK代码 使用lldb进行c和c++代码调试
+            jniDebuggable true
+            //帮助国际化的东西 然而并没有什么用 会多几个string的国际化的数据
+            pseudoLocalesEnabled false
+            //是否开启渲染脚本 就是一些c写的渲染方法
+            renderscriptDebuggable false
+            //渲染脚本等级 默认是5
+            renderscriptOptimLevel 5
+            //用jacoco 报告测试覆盖率的 必须是机器测试不能是本地测试(要在test文件加下 不能是androidTest文件夹)
+            testCoverageEnabled false
+            //优化 默认就是true app对齐
+            zipAlignEnabled true
+        }
+        hello{
+            //就是集成子debug 集成debug所有的配置
+            initWith debug
         }
     }
     externalNativeBuild {
@@ -35,7 +167,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.android.support:appcompat-v7:27.0.2'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
