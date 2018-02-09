@@ -1,5 +1,8 @@
 package com.mc.commonlib;
 
+import com.bloczzgcold.logger.Logger;
+import com.bloczzgcold.logger.LoggerUtil;
+
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -20,5 +23,12 @@ public class ExampleUnitTest {
         String email = "bloczzgcold@163.com";
         boolean isEmail = StringUtils.isEmail(email);
         System.out.println(isEmail);
+    }
+
+    @Test
+    public void loggerTest(){
+        LoggerUtil.Ext.setDebug(true);
+        Logger.d("test","test");
+        System.out.println();
     }
 }

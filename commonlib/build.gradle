@@ -1,11 +1,12 @@
 apply plugin: 'com.android.library'
+//apply from: './maven.gradle'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion rootProject.ext.version.compileSdkVersion
 
     defaultConfig {
-        minSdkVersion 15
-        targetSdkVersion 27
+        minSdkVersion rootProject.ext.version.minSdkVersion
+        targetSdkVersion rootProject.ext.version.targetSdkVersion
         versionCode 1
         versionName "1.0"
 
@@ -23,7 +24,6 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-
     testImplementation 'junit:junit:4.12'
+    compileOnly project(':logger')
 }

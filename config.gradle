@@ -1,0 +1,12 @@
+ext{
+    version = [
+            compileSdkVersion : 27,
+            minSdkVersion : 16,
+            targetSdkVersion : 27
+    ]
+
+    dependVersion = [
+            support    : "27.0.2",
+            constraint_layout : "1.0.2"
+    ]
+}

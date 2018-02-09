@@ -1,2 +1,4 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.bloczzgcold.paylib" />
+    package="com.bloczzgcold.paylib" >
+    <uses-permission android:name="android.permission.INTERNET" />
+</manifest>

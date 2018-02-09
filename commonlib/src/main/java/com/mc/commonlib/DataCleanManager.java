@@ -19,7 +19,7 @@ public class DataCleanManager {
     /**
      * * 清除本应用内部缓存(/data/data/com.xxx.xxx/cache) * *
      *
-     * @param context
+     * @param context 上下文对象
      */
     public static void cleanInternalCache(Context context) {
         deleteFilesByDirectory(context.getCacheDir());
@@ -28,7 +28,7 @@ public class DataCleanManager {
     /**
      * * 清除本应用所有数据库(/data/data/com.xxx.xxx/databases) * *
      *
-     * @param context
+     * @param context 上下文对象
      */
     public static void cleanDatabases(Context context) {
         deleteFilesByDirectory(new File(
@@ -38,7 +38,7 @@ public class DataCleanManager {
     /**
      * * 清除本应用SharedPreference(/data/data/com.xxx.xxx/shared_prefs) *
      *
-     * @param context
+     * @param context 上下文对象
      */
     public static void cleanSharedPreference(Context context) {
         deleteFilesByDirectory(new File(
@@ -48,8 +48,8 @@ public class DataCleanManager {
     /**
      * * 按名字清除本应用数据库 * *
      *
-     * @param context
-     * @param dbName
+     * @param context 上下文对象
+     * @param dbName 数据库名称
      */
     public static void cleanDatabaseByName(Context context, String dbName) {
         context.deleteDatabase(dbName);
@@ -58,7 +58,7 @@ public class DataCleanManager {
     /**
      * * 清除/data/data/com.xxx.xxx/files下的内容 * *
      *
-     * @param context
+     * @param context 上下文对象
      */
     public static void cleanFiles(Context context) {
         deleteFilesByDirectory(context.getFilesDir());
@@ -67,7 +67,7 @@ public class DataCleanManager {
     /**
      * * 清除外部cache下的内容(/mnt/sdcard/android/data/com.xxx.xxx/cache)
      *
-     * @param context
+     * @param context 上下文对象
      */
     public static void cleanExternalCache(Context context) {
         if (Environment.getExternalStorageState()
@@ -79,7 +79,7 @@ public class DataCleanManager {
     /**
      * * 清除自定义路径下的文件，使用需小心，请不要误删。而且只支持目录下的文件删除 * *
      *
-     * @param filePath
+     * @param filePath 文件路径
      */
     public static void cleanCustomCache(String filePath) {
         deleteFilesByDirectory(new File(filePath));
@@ -88,8 +88,8 @@ public class DataCleanManager {
     /**
      * * 清除本应用所有的数据 * *
      *
-     * @param context
-     * @param filepath
+     * @param context 上下文对象
+     * @param filepath 文件路径
      */
     public static void cleanApplicationData(Context context,
                                             String... filepath) {
@@ -109,7 +109,7 @@ public class DataCleanManager {
     /**
      * * 删除方法 这里只会删除某个文件夹下的文件，如果传入的directory是个文件，将不做处理 * *
      *
-     * @param directory
+     * @param directory 文件夹
      */
     private static void deleteFilesByDirectory(File directory) {
         if (directory != null && directory.exists()
@@ -144,12 +144,10 @@ public class DataCleanManager {
     /**
      * 删除指定目录下文件及目录
      *
-     * @param deleteThisPath
-     * @param filePath
-     * @return
+     * @param deleteThisPath 是否删除当前路径的目录或文件
+     * @param filePath 文件或目录路径
      */
-    public static void deleteFolderFile(String filePath,
-                                        boolean deleteThisPath) {
+    public static void deleteFolderFile(String filePath, boolean deleteThisPath) {
         if (!TextUtils.isEmpty(filePath)) {
             try {
                 File file = new File(filePath);
@@ -178,8 +176,8 @@ public class DataCleanManager {
     /**
      * 格式化单位
      *
-     * @param size
-     * @return
+     * @param size double大小
+     * @return KB、MB、GB、TB单位
      */
     public static String getFormatSize(double size) {
         double kiloByte = size / 1024;
@@ -215,9 +213,9 @@ public class DataCleanManager {
     /**
      * 获取文件大小
      *
-     * @param file
-     * @return
-     * @throws Exception
+     * @param file 文件
+     * @return 文件大小描述
+     * @throws Exception 异常
      */
     public static String getCacheSize(File file) throws Exception {
         return getFormatSize(getFolderSize(file));

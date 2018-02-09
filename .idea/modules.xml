@@ -2,10 +2,13 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/AndroidTools.iml" filepath="$PROJECT_DIR$/AndroidTools.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/AndroidTools.iml" filepath="$PROJECT_DIR$/.idea/AndroidTools.iml" />
+      <module fileurl="file://D:\AndroidStudioProject\AndroidTools\AndroidTools.iml" filepath="D:\AndroidStudioProject\AndroidTools\AndroidTools.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/commonlib/commonlib.iml" filepath="$PROJECT_DIR$/commonlib/commonlib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/logger/logger.iml" filepath="$PROJECT_DIR$/logger/logger.iml" />
       <module fileurl="file://$PROJECT_DIR$/paylib/paylib.iml" filepath="$PROJECT_DIR$/paylib/paylib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/securitylib/securitylib.iml" filepath="$PROJECT_DIR$/securitylib/securitylib.iml" />
     </modules>
   </component>
 </project>
