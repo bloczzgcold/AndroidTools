@@ -1,5 +1,11 @@
 apply plugin: 'com.android.library'
-apply from: './maven.gradle'
+apply plugin: 'com.jfrog.artifactory'
+apply plugin: 'maven-publish'
+
+
+def ARTIFACT_ID = 'logger'
+def VERSION_NAME = '1.0.0'
+def GROUP_ID = 'com.bloczzgcold.logger'
 
 android {
     compileSdkVersion rootProject.ext.version.compileSdkVersion
@@ -23,5 +29,30 @@ android {
 
 }
 dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
     testImplementation 'junit:junit:4.12'
 }
+publishing {
+    publications {
+        aar(MavenPublication) {
+            groupId GROUP_ID
+            version = VERSION_NAME
+            artifactId ARTIFACT_ID
+            // Tell maven to prepare the generated "*.aar" file for publishing
+            artifact("$buildDir/outputs/aar/${project.getName()}-release.aar")
+            pom.withXml {
+                def dependencies = asNode().appendNode('dependencies')
+                configurations.compile.allDependencies.each{
+                    // 如果有compile fileTree()，group会为空，需要去除
+                    if(it.group != null) {
+                        def dependency = dependencies.appendNode('dependency')
+                        dependency.appendNode('groupId', it.group)
+                        dependency.appendNode('artifactId', it.name)
+                        dependency.appendNode('version', it.version)
+                    }
+                }
+            }
+        }
+    }
+}
+
