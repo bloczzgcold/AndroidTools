@@ -5,9 +5,9 @@ package com.bloczzgcold.logger;
  * logger configure
  */
 
-public class LoggerUtil {
+public class LoggerManager {
 
-    private LoggerUtil(){}
+    private LoggerManager(){}
 
     public static class Ext{
         private static boolean debug = false;

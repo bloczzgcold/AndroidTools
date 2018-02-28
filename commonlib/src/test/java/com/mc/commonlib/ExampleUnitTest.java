@@ -1,7 +1,7 @@
 package com.mc.commonlib;
 
 import com.bloczzgcold.logger.Logger;
-import com.bloczzgcold.logger.LoggerUtil;
+import com.bloczzgcold.logger.LoggerManager;
 
 import org.junit.Test;
 
@@ -27,7 +27,7 @@ public class ExampleUnitTest {
 
     @Test
     public void loggerTest(){
-        LoggerUtil.Ext.setDebug(true);
+        LoggerManager.Ext.setDebug(true);
         Logger.d("test","test");
         System.out.println();
     }

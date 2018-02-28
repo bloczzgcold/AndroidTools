@@ -11,7 +11,7 @@ import com.bloczzgcold.logger.helpers.MessageFormatter;
 public class Logger {
 
     public static boolean isDebugEnable() {
-        return LoggerUtil.isDebug();
+        return LoggerManager.isDebug();
     }
 
     public static void d(String tag, String msg) {
@@ -48,7 +48,7 @@ public class Logger {
     }
 
     public static boolean isInfoEnable() {
-        return LoggerUtil.isDebug();
+        return LoggerManager.isDebug();
     }
 
     public static void i(String tag, String msg) {
@@ -85,7 +85,7 @@ public class Logger {
     }
 
     public static boolean isWarnEnable() {
-        return LoggerUtil.isDebug();
+        return LoggerManager.isDebug();
     }
 
     public static void w(String tag, String msg) {
@@ -122,7 +122,7 @@ public class Logger {
     }
 
     public static boolean isErrorEnable() {
-        return LoggerUtil.isDebug();
+        return LoggerManager.isDebug();
     }
 
     public static void e(String tag, String msg) {
