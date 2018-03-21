@@ -1,5 +1,12 @@
 apply plugin: 'com.android.library'
-apply from: './artifactory.gradle'
+apply plugin: 'maven'
+
+// 配置参数
+ext {
+    maven_artifactId = 'security-util'
+    maven_description = '加密工具'
+}
+apply from: rootProject.file('maven-android.gradle')
 
 android {
     compileSdkVersion rootProject.ext.version.compileSdkVersion
@@ -22,6 +29,5 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    testImplementation 'junit:junit:4.12'
     compileOnly project(':logger')
 }

@@ -1,5 +1,12 @@
 apply plugin: 'com.android.library'
-apply from: './artifactory.gradle'
+//apply plugin: 'maven'
+//
+//// 配置参数
+//ext {
+//    maven_artifactId = 'common-util'
+//    maven_description = '通用工具'
+//}
+//apply from: rootProject.file('maven-android.gradle')
 
 android {
     compileSdkVersion rootProject.ext.version.compileSdkVersion
@@ -9,8 +16,6 @@ android {
         targetSdkVersion rootProject.ext.version.targetSdkVersion
         versionCode 1
         versionName "1.0"
-
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     }
 
@@ -24,6 +29,5 @@ android {
 }
 
 dependencies {
-    testImplementation 'junit:junit:4.12'
     compileOnly project(':logger')
 }

@@ -1,5 +1,12 @@
 apply plugin: 'com.android.library'
-apply from: './artifactory.gradle'
+apply plugin: 'maven'
+
+// 配置参数
+ext {
+    maven_artifactId = 'pay-util'
+    maven_description = '支付模块'
+}
+apply from: rootProject.file('maven-android.gradle')
 
 android {
     compileSdkVersion rootProject.ext.version.compileSdkVersion
