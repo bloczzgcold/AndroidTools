@@ -2,6 +2,7 @@ package com.mc.androidtools
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import com.mc.commonlib.PinyinTools
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -11,7 +12,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // Example of a call to a native method
-        sample_text.text = stringFromJNI()
+//        sample_text.text = stringFromJNI()
+        val text = PinyinTools.getPingYin("我要用微信支付")
+        var contains = text.contains("weixin")
+        sample_text.text = contains.toString()
     }
 
     /**

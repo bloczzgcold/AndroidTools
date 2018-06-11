@@ -30,4 +30,5 @@ android {
 
 dependencies {
     compileOnly project(':logger')
+    implementation files('libs/pinyin4j-2.5.0.jar')
 }
